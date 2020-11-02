@@ -4,44 +4,39 @@ import axios from 'axios';
 const api = {
   key: 'acdc2d3db2338e661cb1d27c3484514f',
   base: 'https://api.openweathermap.org/data/2.5/',
-        
-}
+};
+
+const dateBuilder = (d) =>{
+  const months = ['January', 'Febuary', 'March', 'April', 'May','June', 'July', 
+                  'August', 'September', 'October', 'November', 'December'];
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const day = days[d.getDay()];
+  const date = d.getDate();
+  const month = months[d.getMonth()];
+  const year = d.getFullYear();
+  
+  return `${day} ${date} ${month} ${year}`;
+};
 
 const App = () => {
-  const [input, setInput] = useState('')
-  const [weather, setWeather] = useState({})
+  const [input, setInput] = useState('');
+  const [weather, setWeather] = useState({});
 
   const search = async () => {
     const responce = await axios.get(`${api.base}weather?q=${input}&units=metric&APPID=${api.key}`)
     setWeather(responce.data);
-    
-  }
+  };
   
   const handleSubmit = (e) => {
-    e.preventDefault()
-    search()
-    setInput('')
-    console.log(weather.name)
-   }
+    e.preventDefault();
+    search();
+    setInput('');
+   };
 
   const handleChange = (e) => {
-    setInput(e.target.value)
-    
-  }  
-
-  const dateBuilder = (d) =>{
-    let months = ['January', 'Febuary', 'March', 'April', 'May',
-                  'June', 'July', 'August', 'September', 'October',
-                'November', 'December']
-    let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-  
-    let day = days[d.getDay()];
-    let date = d.getDate();
-    let month = months[d.getMonth()]
-    let year = d.getFullYear()
-    
-    return `${day} ${date} ${month} ${year}`
-  }
+    setInput(e.target.value);
+  };
 
   const handleWeather = () =>{
     if (typeof weather.main != "undefined"){
@@ -53,12 +48,12 @@ const App = () => {
         return 'app autmn'
       }else{
         return 'app winter'
-      }
+      };
 
     }else{
       return 'app'
-    }
-  }
+    };
+  };
 
   return (
     <>
@@ -89,9 +84,8 @@ const App = () => {
             <div className="weather">{weather.weather[0].main}</div>
           </div>
         </div>
-        ) : ('')}
-       
-     </main>
+        ) : ('')};
+      </main>
    </div>
    </>
   );
